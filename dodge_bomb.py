@@ -52,11 +52,12 @@ def gameover(screen: pg.Surface) -> None:
     gmkk2_rct = gmkk2_img.get_rect()
     gmkk2_rct.center = 750, 320
 
-    gm_img.blit(txt, [400, 300])
-    gm_img.blit(gmkk_img, gmkk_rct)     #左こうかとんblit
-    gm_img.blit(gmkk2_img, gmkk2_rct)
-    
-    screen.blit(gm_img, gm_rct)   #右こうかとんblit
+    screen.blit(gm_img, gm_rct)
+
+    screen.blit(txt, [400, 300])
+    screen.blit(gmkk_img, gmkk_rct)     #左こうかとんblit
+    screen.blit(gmkk2_img, gmkk2_rct)   #右こうかとんblit
+
     pg.display.update()     #6.の操作
     time.sleep(5)
 
