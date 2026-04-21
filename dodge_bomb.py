@@ -2,6 +2,7 @@ import os
 import sys
 import pygame as pg
 import random
+import time
 
 
 WIDTH, HEIGHT = 1100, 650
@@ -16,7 +17,6 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     画面内ならTrue、画面外ならFalse
     """
 
-
     yoko, tate = True, True
     if rct.left < 0 or WIDTH < rct.right:    #横方向判定
         yoko = False
@@ -24,6 +24,41 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
         tate = False
     
     return yoko, tate
+
+
+def gameover(screen: pg.Surface) -> None:
+    """
+    ゲームオーバー画面を表示するための関数です。
+    gm_imgは黒い背景
+    fontoは「Game Over」という言葉
+    gmkk_imgはこうかとんです。
+    """
+
+    gm_img = pg.Surface((WIDTH, HEIGHT))    #Game Over用背景画像作成
+    pg.draw.rect(gm_img, (0, 0, 0), pg.Rect(0, 0,  WIDTH, HEIGHT))
+    gm_img.set_alpha(100)
+    gm_rct = gm_img.get_rect()
+    # gm_rct.center = WIDTH, HEIGHT
+    fonto = pg.font.Font(None, 80)      #Game Overの文字と背景作成
+    txt = fonto.render("Game Over",
+                       True, (255, 255, 255))
+    txt.set_alpha(255)                  #透明度個別調整
+    gmkk_img = pg.image.load("fig/0.png")   #左のこうかとん
+    gmkk_img.set_alpha(255)     #透明度個別調整
+    gmkk_rct = gmkk_img.get_rect()
+    gmkk_rct.center = 350, 320
+    gmkk2_img = pg.image.load("fig/0.png")   #右のこうかとん
+    gmkk2_img.set_alpha(255)        #透明度個別調整
+    gmkk2_rct = gmkk2_img.get_rect()
+    gmkk2_rct.center = 750, 320
+
+    gm_img.blit(txt, [400, 300])
+    gm_img.blit(gmkk_img, gmkk_rct)     #左こうかとんblit
+    gm_img.blit(gmkk2_img, gmkk2_rct)
+    
+    screen.blit(gm_img, gm_rct)   #右こうかとんblit
+    pg.display.update()     #6.の操作
+    time.sleep(5)
 
 
 def main():
@@ -52,7 +87,8 @@ def main():
             if event.type == pg.QUIT: 
                 return
             
-        if kk_rct.colliderect(bb_rct):
+        if kk_rct.colliderect(bb_rct):      #こうかとんと爆弾がぶつかったときの処理
+            gameover(screen)
             return
         screen.blit(bg_img, [0, 0]) 
 
