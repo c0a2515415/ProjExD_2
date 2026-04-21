@@ -40,7 +40,8 @@ def gameover(screen: pg.Surface) -> None:
     gm_rct = gm_img.get_rect()
     # gm_rct.center = WIDTH, HEIGHT
     fonto = pg.font.Font(None, 80)      #Game Overの文字と背景作成
-    txt = fonto.render("Game Over", True, (255, 255, 255))
+    txt = fonto.render("Game Over", 
+                       True, (255, 255, 255))
     txt.set_alpha(255)                  #透明度個別調整
     gmkk_img = pg.image.load("fig/0.png")   #左のこうかとん
     gmkk_img.set_alpha(255)     #透明度個別調整
